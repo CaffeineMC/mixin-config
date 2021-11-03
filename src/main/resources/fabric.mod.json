@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "caffeineconfig",
+  "version": "${version}",
+
+  "name": "CaffeineConfig",
+  "description": "A small dependency to allow the user and other mods to disable our mixins used in Sodium and Lithium",
+  "authors": [
+    "CafffeineMC"
+  ],
+  "contact": {
+    "homepage": "https://caffeinemc.net/",
+    "sources": "https://github.com/CaffeineMC/CaffeineConfig"
+  },
+
+  "license": "LGPL-3.0-only",
+  "icon": "assets/caffeineconfig/icon.png",
+
+  "environment": "*",
+  "entrypoints": {},
+  "mixins": [],
+
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "java": ">=16"
+  }
+}
