@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "CaffeineConfig",
-  "description": "A small dependency to allow the user and other mods to disable our mixins used in Sodium and Lithium",
+  "description": "A small library providing a config system that allows the user and other mods to disable mixins from being applied.",
   "authors": [
     "CafffeineMC"
   ],

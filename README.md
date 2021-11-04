@@ -8,10 +8,40 @@ apply and which shouldn't in a simple manner. It is used in the [Sodium](https:/
 
 ### Adding CaffeineConfig as a dependency to your project
 
-For this you'll need to first add the CaffeineMC maven to the repositories block of your `build.gradle` file, and then add
-CaffeineConfig as an dependency. You should include CaffeineConfig as Jar-in-Jar with your mod.
+To use `CaffeineConfig` you'll first need to add the CaffeineMC maven to the repositories block of your `build.gradle` file, and then add
+CaffeineConfig as a dependency. You should include CaffeineConfig as Jar-in-Jar with your mod.
 
-//TODO this better
+Adding the CaffeineMC maven to your `build.gradle`:
+
+```groovy
+repositories {
+    ...
+    // TODO this when I know the url
+}
+```
+
+Adding CaffeineConfig as a dependency and as a Jar-in-Jar in your mod:
+
+```groovy
+dependencies {
+    ...
+    modImplementation 'net.caffeinemc:CaffeineConfig:1.0.0'
+    include 'net.caffeinemc:CaffeineConfig:1.0.0'
+}
+```
+
+While not strictly necessary, you should also declare the dependency in your `fabric.mod.json`:
+
+```json
+{
+    ...
+    "depends": {
+        ...
+        "caffeineconfig": ">=1.0.0"
+    }
+
+}
+```
 
 ### Extending AbstractCaffeineConfigMixinPlugin
 
