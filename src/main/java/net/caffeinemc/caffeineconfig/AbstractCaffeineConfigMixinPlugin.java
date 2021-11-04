@@ -25,11 +25,6 @@ public abstract class AbstractCaffeineConfigMixinPlugin implements IMixinConfigP
     protected abstract CaffeineConfig createConfig();
     
     /**
-     * @return The logger to use when logging overrides
-     */
-    protected abstract Logger logger();
-    
-    /**
      * @return The root package where mixins are defined.
      */
     protected abstract String mixinPackageRoot();
@@ -57,15 +52,19 @@ public abstract class AbstractCaffeineConfigMixinPlugin implements IMixinConfigP
             }
 
             if (option.isEnabled()) {
-                logger().warn("Force-enabling mixin '{}' as rule '{}' (added by {}) enables it", mixin,
+                logger().warn("Force-enabling mixin '{}' as option '{}' (added by {}) enables it", mixin,
                         option.getName(), source);
             } else {
-                logger().warn("Force-disabling mixin '{}' as rule '{}' (added by {}) disables it and children", mixin,
+                logger().warn("Force-disabling mixin '{}' as option '{}' (added by {}) disables it and children", mixin,
                         option.getName(), source);
             }
         }
 
         return option.isEnabled();
+    }
+
+    private Logger logger() {
+    	return config.getLogger();
     }
 
     @Override

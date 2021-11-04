@@ -16,14 +16,12 @@ CaffeineConfig as an dependency. You should include CaffeineConfig as Jar-in-Jar
 ### Extending AbstractCaffeineConfigMixinPlugin
 
 In order to use the core functionality, you'll need a class that extends `AbstractCaffeineConfigMixinPlugin`,
-where you'll need to implement the `createConfig()`, `logger()` and `mixinPackageRoot()` methods.
+where you'll need to implement the `createConfig()` and `mixinPackageRoot()` methods.
 
 The mixin package root is the deepest common package between all mixins. For example, if the mod has mixins in `org.example.mod.mixin.feature`
 and `org.example.mod.mixin.bugfixes`, the package root would be `org.example.mod.mixin`.
 
-The mixin package root can be skipped when when defining options for the `CaffeineConfig` object.
-
-Note that while `createConfig()` will only be called once, the `logger()` and `mixinPackageRoot()` methods will be called each time
+Note that while `createConfig()` will only be called once, the `mixinPackageRoot()` method will be called each time
 those are needed.
 
 An example implementation of the `AbstractCaffeineConfigMixinPlugin` is the following:
@@ -35,11 +33,6 @@ public class ExampleModMixinConfigPlugin extends AbstractCaffeineConfigMixinPlug
     @Override
     protected CaffeineConfig createConfig() {
         // see next section
-    }
-    
-    @Override
-    protected Logger logger() {
-        return LOGGER;
     }
     
     @Override
@@ -59,7 +52,16 @@ and set the JSON key for other mods to disable settings as `lowercase(modName):o
 
 You can also provide a url to a resource with more information about your config file by calling the `withInfoUrl(String)` method.
 
-Once you're ready to buld your `CaffeineConfig`, you'll need to pass the `Path` to the config file to create or read in the `build()` method. 
+Then you have to add your various mixin options, using `addMixinOption(name, default)`. The options don't have to point directly to a
+mixin file, but can point to a package instead, and that will make disabling the rule disable all mixins in the package. You have to skip the
+mixin package root from before when defining options. You can provide multiple options for a package and subpackages if desired, where disabling the
+top packet will disable all children.
+
+If one of the options depends on another option to be enabled/disabled, you can define dependencies between options by calling
+`addOptionDependency(optionThatDepends, dependency, requiredValue)`. Doing that, if any of the dependencies of an option is not
+the required value, the option will be disabled.
+
+Once you're ready to build your `CaffeineConfig`, you'll need to pass the `Path` to the config file to create or read in the `build()` method. 
 Doing that will already populate option overrides.
 
 An example for creating a `CaffeineConfig` instance for use in a class extending `AbstractCaffeineConfigMixinPlugin` is the following:
@@ -68,11 +70,11 @@ An example for creating a `CaffeineConfig` instance for use in a class extending
     @Override
     protected CaffeineConfig createConfig() {
         return CaffeineConfig.builder("ExampleMod")
-                .addMixinOption("ai", true)
+                .addMixinOption("ai", true) // ai can be disabled and it will disable all subpackages
                 .addMixinOption("ai.brain", true)
                 .addMixinOption("ai.goal", true)
                 .addMixinOption("block.hopper", true)
-                .addOptionDependency("block.hopper", "ai", true)
+                .addOptionDependency("block.hopper", "ai", true) // block.hopper will be disabled if ai is disabled
                 .withInfoUrl("https://example.org")
                 .build(FabricLoader.getInstance().getConfigDir().resolve("examplemod.properties"));
     }

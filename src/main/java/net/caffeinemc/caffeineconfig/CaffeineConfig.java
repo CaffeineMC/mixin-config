@@ -58,15 +58,16 @@ public class CaffeineConfig {
     public String getModName() {
         return modName;
     }
+    
+    /**
+     * @return The logger from this {@link CaffeineConfig}
+     */
+    public Logger getLogger() {
+		return logger;
+	}
 
     /**
-     * <p>Defines a dependency between two registered mixin options. If a dependency is not satisfied, the mixin will
-     * be disabled.</p>
-     *
-     * @param optionName    the mixin option that requires another option to be set to a given value
-     * @param dependency    the mixin option the given option depends on
-     * @param requiredValue the required value of the dependency
-     * @throws IllegalArgumentException if one of the option don't exists
+     * @see Builder#addOptionDependency(String, String, boolean)
      */
     @SuppressWarnings("SameParameterValue")
     private void addOptionDependency(String optionName, String dependency, boolean requiredValue) {
@@ -85,11 +86,7 @@ public class CaffeineConfig {
     }
 
     /**
-     * <p>Defines a Mixin option which can be configured by users and other mods.</p>
-     *
-     * @param mixin   The name of the mixin package which will be controlled by this option
-     * @param enabled {@code true} if the option will be enabled by default, {@code false} otherwise
-     * @throws IllegalStateException If an option with that name already exists
+     * @see Builder#addMixinOption(String, boolean)
      */
     private void addMixinOption(String mixin, boolean enabled) {
         String name = getMixinOptionName(mixin);
