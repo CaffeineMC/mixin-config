@@ -39,7 +39,7 @@ public abstract class AbstractCaffeineConfigMixinPlugin implements IMixinConfigP
         Option option = this.config.getEffectiveOptionForMixin(mixin);
 
         if (option == null) {
-            throw new IllegalStateException(String.format("No options matched mixin '{}'!", mixin));
+            throw new IllegalStateException(String.format("No options matched mixin '%s'! Mixins in this config must be under a registered option name", mixin));
         }
 
         if (option.isOverridden()) {

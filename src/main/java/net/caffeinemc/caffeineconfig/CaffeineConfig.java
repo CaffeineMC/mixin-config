@@ -39,7 +39,8 @@ public class CaffeineConfig {
      * 
      * <p>Unless the methods in the builder are later called, the given {@code modName} will be used to get the logger and the JSON key.</p>
      * <p>The default logger is the one gotten from {@link LogManager#getLogger(String)} with the name {@code modName+Config}, and the default
-     * JSON key is {@code lowercase(modName):options}</p>
+     * JSON key is {@code lowercase(modName):options}. For example, if {@code modName} is {@code ExampleMod}, logger will be {@code ExampleModConfig}
+     * and JSON key will be {@code examplemod:options} </p>
      * 
      * @param modName The name of the mod. Must not be {@code null}
      * 
@@ -79,7 +80,7 @@ public class CaffeineConfig {
         String dependencyOptionName = getMixinOptionName(dependency);
         Option dependencyOption = this.options.get(dependencyOptionName);
         if (dependencyOption == null) {
-            throw new IllegalArgumentException(String.format("Option {} for dependency '{} depends on {}={}' not found. Skipping.", dependency, optionName, dependency, requiredValue));
+            throw new IllegalArgumentException(String.format("Option %s for dependency '%s depends on %s=%s' not found", dependency, optionName, dependency, requiredValue));
         }
         option.addDependency(dependencyOption, requiredValue);
         this.optionsWithDependencies.add(option);
@@ -131,7 +132,7 @@ public class CaffeineConfig {
                 CustomValue overrides = meta.getCustomValue(jsonKey);
 
                 if (overrides.getType() != CvType.OBJECT) {
-                    logger.warn("Mod '{}' contains invalid Lithium option overrides, ignoring", meta.getId());
+                    logger.warn("Mod '{}' contains invalid {} option overrides, ignoring", meta.getId(), modName);
                     continue;
                 }
 
@@ -211,7 +212,7 @@ public class CaffeineConfig {
         return changed;
     }
 
-    private static void writeDefaultConfig(Path file, String infoUrl) throws IOException {
+    private static void writeDefaultConfig(Path file, String modName, String infoUrl) throws IOException {
         Path dir = file.getParent();
 
         if (!Files.exists(dir)) {
@@ -221,7 +222,7 @@ public class CaffeineConfig {
         }
 
         try (BufferedWriter writer = Files.newBufferedWriter(file)) {
-            writer.write("# This is the configuration file for Lithium.\n");
+            writer.write(String.format("# This is the configuration file for %s.\n", modName));
             writer.write("# This file exists for debugging purposes and should not be configured otherwise.\n");
             writer.write("#\n");
             if (infoUrl != null) {
@@ -347,7 +348,7 @@ public class CaffeineConfig {
                 readProperties(props);
             } else {
                 try {
-                    writeDefaultConfig(path, infoUrl);
+                    writeDefaultConfig(path, modName, infoUrl);
                 } catch (IOException e) {
                     logger.warn("Could not write default configuration file", e);
                 }
