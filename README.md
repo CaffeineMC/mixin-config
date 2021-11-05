@@ -1,8 +1,8 @@
 # CaffeineConfig
 
 CaffeineConfig is a mixin configuration manager that allows both the user and other mods to configure what mixins should
-apply and which shouldn't in a simple manner. It is used in the [Sodium](https://github.com/CaffeineMC/sodium-fabric) and
-[Lithium](https://github.com/CaffeineMC/lithium-fabric) mods.
+apply and which shouldn't in a simple manner, and without the mods having to depend on each other. It is used in 
+the [Sodium](https://github.com/CaffeineMC/sodium-fabric) and [Lithium](https://github.com/CaffeineMC/lithium-fabric) mods.
 
 ## Usage
 
@@ -132,3 +132,12 @@ An example is the following:
   ]
 }
 ```
+
+### Notes
+
+Any mixin added to the config (the config being the mixins JSON file) must have a valid option related to it, else the mixin plugin
+will throw an `IllegalStateException` when applying it. This is to ensure mixins are added to the config and to prevent hard to
+debug problems where mixins silently don't apply because they weren't assigned to any option.
+
+If you want to add mixins that are not configurable, you should add them to a different mixin config, that is, a different mixin json
+file that is therefore another entry in your `fabric.mod.json`.
