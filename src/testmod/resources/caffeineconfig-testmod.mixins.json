@@ -1,0 +1,11 @@
+{
+  "package": "net.caffeinemc.caffeineconfig.examplemod.mixin",
+  "required": true,
+  "compatibilityLevel": "JAVA_16",
+  "plugin": "net.caffeinemc.caffeineconfig.examplemod.ExampleModMixinConfigPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+  ]
+}

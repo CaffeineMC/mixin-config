@@ -1,5 +1,7 @@
-package net.caffeinemc.caffeineconfig;
+package net.caffeinemc.caffeineconfig.examplemod;
 
+import net.caffeinemc.caffeineconfig.AbstractCaffeineConfigMixinPlugin;
+import net.caffeinemc.caffeineconfig.CaffeineConfig;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class ExampleModMixinConfigPlugin extends AbstractCaffeineConfigMixinPlugin {
@@ -15,9 +17,9 @@ public class ExampleModMixinConfigPlugin extends AbstractCaffeineConfigMixinPlug
                 .withInfoUrl("https://example.org")
                 .build(FabricLoader.getInstance().getConfigDir().resolve("examplemod.properties"));
     }
-    
+
     @Override
     protected String mixinPackageRoot() {
-        return "org.example.mod.mixins";
+        return "org.example.mod.mixins.";
     }
 }

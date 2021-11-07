@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "caffeineconfig-example",
+  "version": "${version}",
+
+  "name": "CaffeineConfig Example Mod",
+  "description": "A testmod for CaffeineConfig also serving as an example",
+  "authors": [
+    "CafffeineMC"
+  ],
+  "contact": {
+    "homepage": "https://caffeinemc.net/",
+    "sources": "https://github.com/CaffeineMC/CaffeineConfig"
+  },
+
+  "license": "LGPL-3.0-only",
+
+  "environment": "*",
+  "entrypoints": {},
+  "mixins": [
+    "caffeineconfig-testmod.mixins.json"
+  ],
+  "custom": {
+    "examplemod:options": {
+      "mixin.ai": false,
+      "mixin.invalidkey": false,
+      "mixin.block.hopper": "invalidvalue"
+    }
+  },
+
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "java": ">=16"
+  }
+}

@@ -24,8 +24,31 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
-	// You may need to force-disable transitiveness on them.
+	afterEvaluate {
+        testmodImplementation sourceSets.main.output
+    }
+}
+
+sourceSets {
+    testmod {
+        compileClasspath += main.compileClasspath
+        runtimeClasspath += main.runtimeClasspath
+    }
+}
+
+loom {
+    runs {
+        testmodClient {
+            client()
+            name = "Testmod Client"
+            source sourceSets.testmod
+        }
+        testmodServer {
+            server()
+            name = "Testmod Server"
+            source sourceSets.testmod
+        }
+    }
 }
 
 processResources {
