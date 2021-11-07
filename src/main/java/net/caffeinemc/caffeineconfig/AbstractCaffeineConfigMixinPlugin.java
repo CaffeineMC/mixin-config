@@ -20,12 +20,12 @@ public abstract class AbstractCaffeineConfigMixinPlugin implements IMixinConfigP
     
     /**
      * <p>Creates a {@link CaffeineConfig} to be checked against in this mixin plugin</p>
-     * <p>This method will only be called once, on game load</p>
+     * <p>This method will only be called once, on mixin plugin load</p>
      */
     protected abstract CaffeineConfig createConfig();
     
     /**
-     * @return The root package where mixins are defined.
+     * @return The root package where mixins are defined, ending with a dot
      */
     protected abstract String mixinPackageRoot();
 

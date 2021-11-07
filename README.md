@@ -39,7 +39,6 @@ While not strictly necessary, you should also declare the dependency in your `fa
         ...
         "caffeineconfig": ">=1.0.0"
     }
-
 }
 ```
 
@@ -48,17 +47,16 @@ While not strictly necessary, you should also declare the dependency in your `fa
 In order to use the core functionality, you'll need a class that extends `AbstractCaffeineConfigMixinPlugin`,
 where you'll need to implement the `createConfig()` and `mixinPackageRoot()` methods.
 
-The mixin package root is the deepest common package between all mixins. For example, if the mod has mixins in `org.example.mod.mixin.feature`
-and `org.example.mod.mixin.bugfixes`, the package root would be `org.example.mod.mixin`.
+The mixin package root is the deepest common package between all mixins, ending with a dot. For example, if the mod has mixins 
+in `org.example.mod.mixin.feature` and `org.example.mod.mixin.bugfixes`, the package root would be `org.example.mod.mixin.`.
 
 Note that while `createConfig()` will only be called once, the `mixinPackageRoot()` method will be called each time
-those are needed.
+mixin asks the config plugin whether it should apply a mixin.
 
 An example implementation of the `AbstractCaffeineConfigMixinPlugin` is the following:
 
 ```java
 public class ExampleModMixinConfigPlugin extends AbstractCaffeineConfigMixinPlugin {
-    private static final Logger LOGGER = LogManager.getLogger("ExampleMod");
 
     @Override
     protected CaffeineConfig createConfig() {
@@ -67,7 +65,7 @@ public class ExampleModMixinConfigPlugin extends AbstractCaffeineConfigMixinPlug
     
     @Override
     protected String mixinPackageRoot() {
-        return "org.example.mod.mixin";
+        return "org.example.mod.mixin.";
     }
 }
 
