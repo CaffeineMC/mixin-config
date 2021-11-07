@@ -24,7 +24,7 @@ import java.util.Set;
  * @see CaffeineConfig.Builder
  */
 @SuppressWarnings("CanBeFinal")
-public class CaffeineConfig {
+public final class CaffeineConfig {
     private final Map<String, Option> options = new HashMap<>();
     private final Set<Option> optionsWithDependencies = new ObjectLinkedOpenHashSet<>();
     private final String modName;
@@ -33,7 +33,7 @@ public class CaffeineConfig {
     private CaffeineConfig(String modName) {
         this.modName = modName;
     }
-    
+
     /**
      * <p>Creates and returns a {@link CaffeineConfig.Builder} that can be used to create a {@link CaffeineConfig} object.</p>
      * 
@@ -52,14 +52,14 @@ public class CaffeineConfig {
         String jsonKey = modName.toLowerCase() + ":options";
         return config.new Builder().withSettingsKey(jsonKey);
     }
-    
+
     /**
      * @return The mod name used to create this {@link CaffeineConfig}
      */
     public String getModName() {
         return modName;
     }
-    
+
     /**
      * @return The logger from this {@link CaffeineConfig}
      */
@@ -248,7 +248,7 @@ public class CaffeineConfig {
                 .filter(Option::isOverridden)
                 .count();
     }
-    
+
     /**
      * <p>A builder for {@link CaffeineConfig} instances.</p>
      * 
@@ -257,11 +257,11 @@ public class CaffeineConfig {
      * 
      * @see CaffeineConfig#builder(String)
      */
-    public class Builder {
+    public final class Builder {
         private boolean alreadyBuilt = false;
         private String infoUrl;
         private String jsonKey;
-        
+
         private Builder() {}
 
         /**
@@ -275,7 +275,7 @@ public class CaffeineConfig {
             CaffeineConfig.this.addMixinOption(mixin, enabled);
             return this;
         }
-        
+
         /**
          * <p>Defines a dependency between two registered mixin options. If a dependency is not satisfied, the mixin will
          * be disabled.</p>
@@ -289,7 +289,7 @@ public class CaffeineConfig {
             CaffeineConfig.this.addOptionDependency(option, dependency, requiredValue);
             return this;
         }
-        
+
         /**
          * <p>Sets the logger the built {@link CaffeineConfig} will use, instead of one derived from the mod name</p>
          * @param logger The {@link Logger} to use. Can't be {@code null}
@@ -298,7 +298,7 @@ public class CaffeineConfig {
             CaffeineConfig.this.logger = logger;
             return this;
         }
-        
+
         /**
          * <p>Sets the key name to search in other mod's custom values in order to find overrides.</p>
          * @param key The key to search for
@@ -307,7 +307,7 @@ public class CaffeineConfig {
             this.jsonKey = key;
             return this;
         }
-        
+
         /**
          * <p>Sets the url to a resource with more information about the options to write in the config file header.</p>
          * 
@@ -318,7 +318,7 @@ public class CaffeineConfig {
             this.infoUrl = url;
             return this;
         }
-        
+
         /**
          * <p>Builds a {@link CaffeineConfig} with the specified options, and populates the overrides for them.</p>
          * 
@@ -359,11 +359,10 @@ public class CaffeineConfig {
             // Check dependencies several times, because one iteration may disable a option required by another option
             // This terminates because each additional iteration will disable one or more options, and there is only a finite number of rules
             while (applyDependencies());
-            
+
             this.alreadyBuilt = true;
-            
+
             return CaffeineConfig.this;
         }
     }
 }
-

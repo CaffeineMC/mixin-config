@@ -37,7 +37,7 @@ public final class Option {
     public String getName() {
         return this.name;
     }
-    
+
     /**
      * @return {@code true} if this option is enabled, {@code false} otherwise
      */

@@ -17,13 +17,13 @@ public abstract class AbstractCaffeineConfigMixinPlugin implements IMixinConfigP
         logger().info("Loaded configuration file for {}: {} options available, {} override(s) found",
                 config.getModName(), this.config.getOptionCount(), this.config.getOptionOverrideCount());
     }
-    
+
     /**
      * <p>Creates a {@link CaffeineConfig} to be checked against in this mixin plugin</p>
      * <p>This method will only be called once, on mixin plugin load</p>
      */
     protected abstract CaffeineConfig createConfig();
-    
+
     /**
      * @return The root package where mixins are defined, ending with a dot
      */
@@ -64,14 +64,14 @@ public abstract class AbstractCaffeineConfigMixinPlugin implements IMixinConfigP
     }
 
     private Logger logger() {
-    	return config.getLogger();
+        return config.getLogger();
     }
 
     @Override
     public String getRefMapperConfig() {
         return null;
     }
-    
+
     @Override
     public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
 
