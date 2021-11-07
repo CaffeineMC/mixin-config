@@ -8,6 +8,10 @@
   "authors": [
     "CafffeineMC"
   ],
+  "contributors": [ 
+    "EarthComputer",
+    "altrisi"
+  ],
   "contact": {
     "homepage": "https://caffeinemc.net/",
     "sources": "https://github.com/CaffeineMC/CaffeineConfig"
